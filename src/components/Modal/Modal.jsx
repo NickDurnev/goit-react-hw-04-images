@@ -1,20 +1,23 @@
 import PropTypes from 'prop-types';
-import { useEffect } from 'react';
+import { useCallback, useEffect } from 'react';
 import Overlay from './Modal.styled';
 
 const Modal = ({ image, description, onClose }) => {
-  const handleKeyDownClose = e => {
-    if (e.code === 'Escape') {
-      onClose();
-    }
-  };
+  const handleKeyDownClose = useCallback(
+    e => {
+      if (e.code === 'Escape') {
+        onClose();
+      }
+    },
+    [onClose]
+  );
 
   useEffect(() => {
     window.addEventListener('keydown', handleKeyDownClose);
     return () => {
       window.removeEventListener('keydown', handleKeyDownClose);
     };
-  }, []);
+  }, [handleKeyDownClose]);
 
   const handleClickClose = e => {
     if (e.target === e.currentTarget) {

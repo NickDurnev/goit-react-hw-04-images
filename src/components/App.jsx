@@ -23,7 +23,7 @@ export const App = () => {
   const [selectImage, setSelectImage] = useState(null);
   const [selectImageDescription, setSelectImageDescription] = useState(null);
   const [status, setStatus] = useState(statusRef.current.IDLE);
-  const [error, setError] = useState(null);
+  const [fetchError, setFetchError] = useState(null);
   const [scrollY, setScrollY] = useState(0);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -41,7 +41,8 @@ export const App = () => {
         setTotalImages(response.total);
         setStatus(statusRef.current.RESOLVED);
       } catch (error) {
-        setError(error);
+        setFetchError(error);
+        console.log(fetchError);
         setStatus(statusRef.current.REJECTED);
       }
       if (currentPage > 1) {
@@ -54,7 +55,7 @@ export const App = () => {
       }
     }
     fetchData();
-  }, [searchValue, currentPage, scrollY]);
+  }, [searchValue, currentPage, scrollY, fetchError]);
 
   const handleSubmit = value => {
     setSearchValue(value);
